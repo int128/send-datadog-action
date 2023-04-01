@@ -2,9 +2,24 @@ name: typescript-action
 description: Template of TypeScript Action
 
 inputs:
-  name:
-    description: example input
+  datadog-api-key:
+    description: Datadog API key
     required: true
+  datadog-site:
+    description: Datadog Site name if different than datadoghq.com.
+    required: false
+  metric-name:
+    description: Name of metric
+    required: false
+  metric-type:
+    description: Type of metric (count, gauge or rate)
+    required: false
+  metric-value:
+    description: Value of metric
+    required: false
+  metric-tags:
+    description: Tags of metric (multi-line of KEY:VALUE)
+    required: false
 
 runs:
   using: 'node16'

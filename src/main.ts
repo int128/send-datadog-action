@@ -3,7 +3,12 @@ import { run } from './run'
 
 const main = async (): Promise<void> => {
   await run({
-    name: core.getInput('name', { required: true }),
+    datadogApiKey: core.getInput('datadog-api-key', { required: true }),
+    datadogSite: core.getInput('datadog-site') || undefined,
+    metricName: core.getInput('metric-name'),
+    metricType: core.getInput('metric-type'),
+    metricValue: Number.parseFloat(core.getInput('metric-value')),
+    metricTags: core.getMultilineInput('metric-tags'),
   })
 }
 

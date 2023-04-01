@@ -33,10 +33,17 @@ jobs:
       - run: yarn build
       - run: yarn package
 
-      - name: e2e-test
+      - name: int128/send-datadog-action
         uses: ./
         with:
-          name: foo
+          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
+          metric-name: send_datadog_action.run
+          metric-type: count
+          metric-value: 1
+          metric-tags: |
+            github.event_name:${{ github.event_name }}
+            github.repository:${{ github.repository }}
+            github.actor:${{ github.actor }}
 
   generate:
     runs-on: ubuntu-latest
