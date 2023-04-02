@@ -56,7 +56,6 @@ type EventInputs = {
   eventTitle: string
   eventText: string
   eventTags: string[]
-  eventSource?: string
 }
 
 const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
@@ -65,7 +64,6 @@ const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
     host: 'github.com',
     title: inputs.eventTitle,
     text: inputs.eventText,
-    sourceTypeName: inputs.eventSource,
     dateHappened: unixTime,
     tags: inputs.eventTags,
   }

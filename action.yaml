@@ -26,9 +26,6 @@ inputs:
   event-text:
     description: Text of event
     required: false
-  event-source:
-    description: Source type name of event (optional)
-    required: false
   event-tags:
     description: Tags of event (multi-line of KEY:VALUE) (optional)
     required: false

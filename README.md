@@ -31,7 +31,6 @@ jobs:
           datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
           event-title: Your awesome event
           event-text: This is an example event
-          event-source: github-actions
 ```
 
 ### Inputs
@@ -46,7 +45,6 @@ jobs:
 | `metric-tags` | - | Tags of metric (multi-line of `KEY:VALUE`) (optional)
 | `event-title` | - | Title of event
 | `event-text` | - | Text of event
-| `event-source` | - | Source type name of event (optional)
 | `event-tags` | - | Tags of event (multi-line of KEY:VALUE) (optional)
 
 ### Outputs
