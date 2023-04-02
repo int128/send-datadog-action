@@ -11,7 +11,7 @@ const main = async (): Promise<void> => {
     metricTags: core.getMultilineInput('metric-tags'),
     eventTitle: core.getInput('event-title'),
     eventText: core.getInput('event-text'),
-    eventAlertType: parseEventAlertType(core.getInput('event-alert-type')),
+    eventAlertType: parseEventAlertType(core.getInput('event-alert-type') || undefined),
     eventTags: core.getMultilineInput('event-tags'),
   })
 }
