@@ -26,6 +26,9 @@ inputs:
   event-text:
     description: Text of event
     required: false
+  event-alert-type:
+    description: Alert type of event (error, warning or info) (optional)
+    required: false
   event-tags:
     description: Tags of event (multi-line of KEY:VALUE) (optional)
     required: false

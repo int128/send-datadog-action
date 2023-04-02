@@ -16,6 +16,7 @@ test('run successfully', async () => {
       metricTags: ['key:value'],
       eventTitle: 'my-event',
       eventText: 'My event',
+      eventAlertType: 'info',
       eventTags: ['key:value'],
     })
   ).resolves.toBeUndefined()

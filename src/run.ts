@@ -1,6 +1,8 @@
 import * as core from '@actions/core'
 import { client, v1 } from '@datadog/datadog-api-client'
+import { UnparsedObject } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-common/util'
 import { Series } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1'
+import * as EventAlertType from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1/models/EventAlertType'
 
 type Inputs = {
   datadogApiKey: string
@@ -55,7 +57,19 @@ const sendMetric = async (api: v1.MetricsApi, inputs: MetricInputs) => {
 type EventInputs = {
   eventTitle: string
   eventText: string
+  eventAlertType?: v1.EventAlertType
   eventTags: string[]
+}
+
+export const parseEventAlertType = (s?: string): v1.EventAlertType | undefined =>
+  validateEventAlertType(s) ? s : undefined
+
+const validateEventAlertType = (s?: string | UnparsedObject): s is v1.EventAlertType | undefined => {
+  const options = [EventAlertType.ERROR, EventAlertType.WARNING, EventAlertType.INFO]
+  if (s === undefined || (typeof s === 'string' && options.includes(s))) {
+    return true
+  }
+  throw new Error(`event-alert-type must be one of ${options.join(', ')}`)
 }
 
 const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
@@ -65,6 +79,7 @@ const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
     title: inputs.eventTitle,
     text: inputs.eventText,
     dateHappened: unixTime,
+    alertType: inputs.eventAlertType,
     tags: inputs.eventTags,
   }
   core.info(`Sending event:\n${JSON.stringify(event, undefined, 2)}`)

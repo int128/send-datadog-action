@@ -46,6 +46,7 @@ jobs:
             github.actor:${{ github.actor }}
           event-title: GitHub Actions ${{ github.event_name }}
           event-text: workflow ${{ github.workflow }}, job ${{ github.job }}
+          event-alert-type: info
           event-tags: |
             github.event_name:${{ github.event_name }}
             github.repository:${{ github.repository }}

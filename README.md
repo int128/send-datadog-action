@@ -39,13 +39,14 @@ jobs:
 |------|----------|------------
 | `datadog-api-key` | (required) | Datadog API key. If not set, this action does not send metrics actually
 | `datadog-site` | - | Datadog Server name such as `datadoghq.eu`, `ddog-gov.com`, `us3.datadoghq.com`
-| `metric-name` | - | Name of metric
-| `metric-type` | - | Type of metric (`count`, `gauge` or `rate`)
-| `metric-value` | - | Value of metric
-| `metric-tags` | - | Tags of metric (multi-line of `KEY:VALUE`) (optional)
-| `event-title` | - | Title of event
-| `event-text` | - | Text of event
-| `event-tags` | - | Tags of event (multi-line of KEY:VALUE) (optional)
+| `metric-name` | (required if sending a metric) | Name of metric
+| `metric-type` | (required if sending a metric) | Type of metric (`count`, `gauge` or `rate`)
+| `metric-value` | (required if sending a metric) | Value of metric
+| `metric-tags` | - | Tags of metric (multi-line of `KEY:VALUE`)
+| `event-title` | (required if sending an event) | Title of event
+| `event-text` | (required if sending an event) | Text of event
+| `event-alert-type` | - | Alert type of event (error, warning or info)
+| `event-tags` | - | Tags of event (multi-line of KEY:VALUE)
 
 ### Outputs
 
