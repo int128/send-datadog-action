@@ -9,6 +9,10 @@ const main = async (): Promise<void> => {
     metricType: core.getInput('metric-type'),
     metricValue: Number.parseFloat(core.getInput('metric-value')),
     metricTags: core.getMultilineInput('metric-tags'),
+    eventTitle: core.getInput('event-title'),
+    eventText: core.getInput('event-text'),
+    eventSource: core.getInput('event-source') || undefined,
+    eventTags: core.getMultilineInput('event-tags'),
   })
 }
 

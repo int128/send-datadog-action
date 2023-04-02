@@ -18,7 +18,19 @@ inputs:
     description: Value of metric
     required: false
   metric-tags:
-    description: Tags of metric (multi-line of KEY:VALUE)
+    description: Tags of metric (multi-line of KEY:VALUE) (optional)
+    required: false
+  event-title:
+    description: Title of event
+    required: false
+  event-text:
+    description: Text of event
+    required: false
+  event-source:
+    description: Source type name of event (optional)
+    required: false
+  event-tags:
+    description: Tags of event (multi-line of KEY:VALUE) (optional)
     required: false
 
 runs:

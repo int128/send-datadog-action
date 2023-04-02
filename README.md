@@ -14,6 +14,24 @@ jobs:
       - uses: int128/send-datadog-action@v1
         with:
           datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
+          metric-name: your_awesome_metric
+          metric-type: count
+          metric-value: 1
+```
+
+To send an event, create a workflow as follows:
+
+```yaml
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: int128/send-datadog-action@v1
+        with:
+          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
+          event-title: Your awesome event
+          event-text: This is an example event
+          event-source: github-actions
 ```
 
 ### Inputs
@@ -25,7 +43,11 @@ jobs:
 | `metric-name` | - | Name of metric
 | `metric-type` | - | Type of metric (`count`, `gauge` or `rate`)
 | `metric-value` | - | Value of metric
-| `metric-tags` | - | Tags of metric (multi-line of `KEY:VALUE`)
+| `metric-tags` | - | Tags of metric (multi-line of `KEY:VALUE`) (optional)
+| `event-title` | - | Title of event
+| `event-text` | - | Text of event
+| `event-source` | - | Source type name of event (optional)
+| `event-tags` | - | Tags of event (multi-line of KEY:VALUE) (optional)
 
 ### Outputs
 

@@ -5,11 +5,8 @@ import { Series } from '@datadog/datadog-api-client/dist/packages/datadog-api-cl
 type Inputs = {
   datadogApiKey: string
   datadogSite?: string
-  metricName: string
-  metricType: string
-  metricValue: number
-  metricTags: string[]
-}
+} & MetricInputs &
+  EventInputs
 
 export const run = async (inputs: Inputs): Promise<void> => {
   const configuration = client.createConfiguration({
@@ -22,9 +19,25 @@ export const run = async (inputs: Inputs): Promise<void> => {
       site: inputs.datadogSite,
     })
   }
+  if (inputs.metricName) {
+    const api = new v1.MetricsApi(configuration)
+    await sendMetric(api, inputs)
+  }
+  if (inputs.eventTitle) {
+    const api = new v1.EventsApi(configuration)
+    await sendEvent(api, inputs)
+  }
+}
 
+type MetricInputs = {
+  metricName: string
+  metricType: string
+  metricValue: number
+  metricTags: string[]
+}
+
+const sendMetric = async (api: v1.MetricsApi, inputs: MetricInputs) => {
   const unixTime = Date.now() / 1000
-  const metrics = new v1.MetricsApi(configuration)
   const series: Series[] = [
     {
       host: 'github.com',
@@ -35,6 +48,28 @@ export const run = async (inputs: Inputs): Promise<void> => {
     },
   ]
   core.info(`Sending metrics:\n${JSON.stringify(series, undefined, 2)}`)
-  const metricsResponse = await metrics.submitMetrics({ body: { series } })
+  const metricsResponse = await api.submitMetrics({ body: { series } })
   core.info(`Sent metrics: ${String(metricsResponse.status)}`)
+}
+
+type EventInputs = {
+  eventTitle: string
+  eventText: string
+  eventTags: string[]
+  eventSource?: string
+}
+
+const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
+  const unixTime = Date.now() / 1000
+  const event: v1.EventCreateRequest = {
+    host: 'github.com',
+    title: inputs.eventTitle,
+    text: inputs.eventText,
+    sourceTypeName: inputs.eventSource,
+    dateHappened: unixTime,
+    tags: inputs.eventTags,
+  }
+  core.info(`Sending event:\n${JSON.stringify(event, undefined, 2)}`)
+  const eventsResponse = await api.createEvent({ body: event })
+  core.info(`Sent event: ${String(eventsResponse.status)}`)
 }
