@@ -1,15 +1,12 @@
 import { run } from '../src/run'
 import { v1 } from '@datadog/datadog-api-client'
 
-jest.mock('@datadog/datadog-api-client')
-const metricsApiMock = {
-  submitMetrics: jest.fn<Promise<v1.IntakePayloadAccepted>, [v1.MetricsApiSubmitMetricsRequest]>(),
-}
-const metricsApiConstructor = v1.MetricsApi as jest.Mock
-metricsApiConstructor.mockReturnValue(metricsApiMock)
+const submitMetrics = jest.spyOn(v1.MetricsApi.prototype, 'submitMetrics')
+const createEvent = jest.spyOn(v1.EventsApi.prototype, 'createEvent')
 
 test('run successfully', async () => {
-  metricsApiMock.submitMetrics.mockResolvedValue({ status: 'ok' })
+  submitMetrics.mockResolvedValue({ status: 'ok' })
+  createEvent.mockResolvedValue({ status: 'ok' })
   await expect(
     run({
       datadogApiKey: 'DATADOG_API_KEY',
@@ -17,6 +14,10 @@ test('run successfully', async () => {
       metricType: 'gauge',
       metricValue: 100,
       metricTags: ['key:value'],
+      eventTitle: 'my-event',
+      eventText: 'My event',
+      eventAlertType: 'info',
+      eventTags: ['key:value'],
     })
   ).resolves.toBeUndefined()
 })
