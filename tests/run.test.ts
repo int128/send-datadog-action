@@ -18,6 +18,6 @@ test('run successfully', async () => {
       eventText: 'My event',
       eventAlertType: 'info',
       eventTags: ['key:value'],
-    })
+    }),
   ).resolves.toBeUndefined()
 })
