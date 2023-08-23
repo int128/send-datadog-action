@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@actions/core": "1.10.0",
-    "@datadog/datadog-api-client": "1.15.0"
+    "@datadog/datadog-api-client": "1.16.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "16.1.1",
