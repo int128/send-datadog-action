@@ -1,0 +1,2 @@
+example.metric,gauge,42,service:backend,env:production
+example.metric,gauge,3,service:frontend,env:development

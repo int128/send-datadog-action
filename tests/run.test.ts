@@ -10,6 +10,7 @@ test('run successfully', async () => {
   await expect(
     run({
       datadogApiKey: 'DATADOG_API_KEY',
+      metricsCsvPath: 'tests/fixtures/metrics.csv',
       metricName: 'my.metric',
       metricType: 'gauge',
       metricValue: 100,

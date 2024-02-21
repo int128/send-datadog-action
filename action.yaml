@@ -8,6 +8,9 @@ inputs:
   datadog-site:
     description: Datadog Site name if different than datadoghq.com.
     required: false
+  metrics-csv-path:
+    description: Glob pattern to CSV file(s) for metrics
+    required: false
   metric-name:
     description: Name of metric
     required: false
