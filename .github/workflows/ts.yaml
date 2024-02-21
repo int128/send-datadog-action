@@ -37,6 +37,7 @@ jobs:
         uses: ./
         with:
           datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
+          metrics-csv-path: tests/fixtures/metrics.csv
           metric-name: send_datadog_action.run
           metric-type: count
           metric-value: 1

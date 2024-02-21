@@ -67,7 +67,7 @@ See the example of [metrics.csv](tests/fixtures/metrics.csv).
 | ------------------ | ------------------------------ | ------------------------------------------------------------------------------- |
 | `datadog-api-key`  | (required)                     | Datadog API key. If not set, this action does not send metrics actually         |
 | `datadog-site`     | -                              | Datadog Server name such as `datadoghq.eu`, `ddog-gov.com`, `us3.datadoghq.com` |
-| `metrics-from-csv` | -                              | Glob pattern to CSV file(s) for metrics                                         |
+| `metrics-csv-path` | -                              | Glob pattern to CSV file(s) for metrics                                         |
 | `metric-name`      | (required if sending a metric) | Name of metric                                                                  |
 | `metric-type`      | (required if sending a metric) | Type of metric (`count`, `gauge` or `rate`)                                     |
 | `metric-value`     | (required if sending a metric) | Value of metric                                                                 |
