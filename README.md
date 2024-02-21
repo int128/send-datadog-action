@@ -56,7 +56,7 @@ jobs:
 A CSV file should be formatted as follows:
 
 ```csv
-metric_name,metric_type,metric_value,metric_tags,...
+metric_name,metric_type,metric_value,tag_key:tag_value,...
 ```
 
 See the example of [metrics.csv](tests/fixtures/metrics.csv).
