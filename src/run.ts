@@ -3,12 +3,14 @@ import { client, v1 } from '@datadog/datadog-api-client'
 import { UnparsedObject } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-common/util'
 import { Series } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1'
 import * as EventAlertType from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1/models/EventAlertType'
+import { MetricsFromCsvInputs, sendMetricsFromCsv } from './csv'
 
 type Inputs = {
   datadogApiKey: string
   datadogSite?: string
 } & MetricInputs &
-  EventInputs
+  EventInputs &
+  MetricsFromCsvInputs
 
 export const run = async (inputs: Inputs): Promise<void> => {
   const configuration = client.createConfiguration({
@@ -20,6 +22,10 @@ export const run = async (inputs: Inputs): Promise<void> => {
     client.setServerVariables(configuration, {
       site: inputs.datadogSite,
     })
+  }
+  if (inputs.metricsCsvPath) {
+    const api = new v1.MetricsApi(configuration)
+    await sendMetricsFromCsv(api, inputs)
   }
   if (inputs.metricName) {
     const api = new v1.MetricsApi(configuration)
