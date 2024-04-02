@@ -1,12 +1,12 @@
-name: typescript-action
-description: Template of TypeScript Action
+name: send-datadog-action
+description: General-purpose action to send metrics or events to Datadog
 
 inputs:
   datadog-api-key:
     description: Datadog API key
     required: true
   datadog-site:
-    description: Datadog Site name if different than datadoghq.com.
+    description: Datadog Site name if different than datadoghq.com
     required: false
   metrics-csv-path:
     description: Glob pattern to CSV file(s) for metrics
