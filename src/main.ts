@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { parseEventAlertType, run } from './run'
+import { parseEventAlertType, run } from './run.js'
 
 const main = async (): Promise<void> => {
   await run({
@@ -12,7 +12,7 @@ const main = async (): Promise<void> => {
     metricTags: core.getMultilineInput('metric-tags'),
     eventTitle: core.getInput('event-title'),
     eventText: core.getInput('event-text'),
-    eventAlertType: parseEventAlertType(core.getInput('event-alert-type') || undefined),
+    eventAlertType: parseEventAlertType(core.getInput('event-alert-type')),
     eventTags: core.getMultilineInput('event-tags'),
   })
 }

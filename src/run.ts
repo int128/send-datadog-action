@@ -1,9 +1,6 @@
 import * as core from '@actions/core'
 import { client, v1 } from '@datadog/datadog-api-client'
-import { UnparsedObject } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-common/util'
-import { Series } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1'
-import * as EventAlertType from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1/models/EventAlertType'
-import { MetricsFromCsvInputs, sendMetricsFromCsv } from './csv'
+import { MetricsFromCsvInputs, sendMetricsFromCsv } from './csv.js'
 
 type Inputs = {
   datadogApiKey: string
@@ -46,7 +43,7 @@ type MetricInputs = {
 
 const sendMetric = async (api: v1.MetricsApi, inputs: MetricInputs) => {
   const unixTime = Date.now() / 1000
-  const series: Series[] = [
+  const series: v1.Series[] = [
     {
       host: 'github.com',
       metric: inputs.metricName,
@@ -67,15 +64,14 @@ type EventInputs = {
   eventTags: string[]
 }
 
-export const parseEventAlertType = (s?: string): v1.EventAlertType | undefined =>
-  validateEventAlertType(s) ? s : undefined
-
-const validateEventAlertType = (s?: string | UnparsedObject): s is v1.EventAlertType | undefined => {
-  const options = [EventAlertType.ERROR, EventAlertType.WARNING, EventAlertType.INFO]
-  if (s === undefined || (typeof s === 'string' && options.includes(s))) {
-    return true
+export const parseEventAlertType = (s: string): v1.EventAlertType | undefined => {
+  if (!s) {
+    return undefined
   }
-  throw new Error(`event-alert-type must be one of ${options.join(', ')}`)
+  if (s === 'error' || s === 'warning' || s === 'info') {
+    return s
+  }
+  throw new Error(`event-alert-type must be either 'error', 'warning', or 'info'`)
 }
 
 const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {

@@ -3,7 +3,6 @@ import * as fs from 'fs/promises'
 import * as glob from '@actions/glob'
 import { v1 } from '@datadog/datadog-api-client'
 import assert from 'assert'
-import { Series } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v1'
 
 export type MetricsFromCsvInputs = {
   metricsCsvPath: string
@@ -11,7 +10,7 @@ export type MetricsFromCsvInputs = {
 
 export const sendMetricsFromCsv = async (api: v1.MetricsApi, inputs: MetricsFromCsvInputs) => {
   const unixTime = Date.now() / 1000
-  const series: Series[] = []
+  const series: v1.Series[] = []
 
   const csvGrobber = await glob.create(inputs.metricsCsvPath, { matchDirectories: false })
   for await (const csvPath of csvGrobber.globGenerator()) {
@@ -24,8 +23,8 @@ export const sendMetricsFromCsv = async (api: v1.MetricsApi, inputs: MetricsFrom
   core.info(`Sent the metrics: ${String(metricsResponse.status)}`)
 }
 
-export const parseMetricsCsv = async (csvPath: string, unixTime: number): Promise<Series[]> => {
-  const series: Series[] = []
+export const parseMetricsCsv = async (csvPath: string, unixTime: number): Promise<v1.Series[]> => {
+  const series: v1.Series[] = []
   const f = await fs.open(csvPath, 'r')
   for await (const line of f.readLines()) {
     const columns = line.split(',')

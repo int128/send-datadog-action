@@ -1,4 +1,4 @@
-import { run } from '../src/run'
+import { run } from '../src/run.js'
 import { v1 } from '@datadog/datadog-api-client'
 
 const submitMetrics = jest.spyOn(v1.MetricsApi.prototype, 'submitMetrics')

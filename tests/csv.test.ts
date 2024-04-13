@@ -1,4 +1,4 @@
-import { parseMetricsCsv } from '../src/csv'
+import { parseMetricsCsv } from '../src/csv.js'
 
 describe('parseMetricsCsv', () => {
   it('parses the metrics csv', async () => {
