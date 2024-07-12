@@ -68,10 +68,10 @@ export const parseEventAlertType = (s: string): v1.EventAlertType | undefined =>
   if (!s) {
     return undefined
   }
-  if (s === 'error' || s === 'warning' || s === 'info') {
+  if (s === 'error' || s === 'warning' || s === 'info' || s === 'success') {
     return s
   }
-  throw new Error(`event-alert-type must be either 'error', 'warning', or 'info'`)
+  throw new Error(`event-alert-type must be either 'error', 'warning', 'success' or 'info'`)
 }
 
 const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
