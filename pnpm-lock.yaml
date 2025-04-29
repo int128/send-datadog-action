@@ -31,7 +31,7 @@ importers:
         specifier: 0.38.3
         version: 0.38.3
       '@vitest/eslint-plugin':
-        specifier: ^1.1.43
+        specifier: 1.1.43
         version: 1.1.43(@typescript-eslint/utils@8.31.1(eslint@9.25.1)(typescript@5.8.3))(eslint@9.25.1)(typescript@5.8.3)(vitest@3.1.2(@types/node@20.17.32))
       eslint:
         specifier: 9.25.1
@@ -49,7 +49,7 @@ importers:
         specifier: 8.31.1
         version: 8.31.1(eslint@9.25.1)(typescript@5.8.3)
       vitest:
-        specifier: ^3.1.2
+        specifier: 3.1.2
         version: 3.1.2(@types/node@20.17.32)
 
 packages:
@@ -1442,7 +1442,7 @@ snapshots:
       '@typescript-eslint/types': 8.31.1
       '@typescript-eslint/typescript-estree': 8.31.1(typescript@5.8.3)
       '@typescript-eslint/visitor-keys': 8.31.1
-      debug: 4.3.4
+      debug: 4.4.0
       eslint: 9.25.1
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -1457,7 +1457,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.31.1(typescript@5.8.3)
       '@typescript-eslint/utils': 8.31.1(eslint@9.25.1)(typescript@5.8.3)
-      debug: 4.3.4
+      debug: 4.4.0
       eslint: 9.25.1
       ts-api-utils: 2.0.1(typescript@5.8.3)
       typescript: 5.8.3
@@ -1470,7 +1470,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.31.1
       '@typescript-eslint/visitor-keys': 8.31.1
-      debug: 4.3.4
+      debug: 4.4.0
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.4
@@ -1744,7 +1744,7 @@ snapshots:
 
   estree-walker@3.0.3:
     dependencies:
-      '@types/estree': 1.0.6
+      '@types/estree': 1.0.7
 
   esutils@2.0.3: {}
 
