@@ -1,6 +1,4 @@
-import { describe } from 'vitest'
-import { it } from 'vitest'
-import { expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { parseMetricsCsv } from '../src/csv.js'
 
 describe('parseMetricsCsv', () => {

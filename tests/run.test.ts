@@ -1,10 +1,9 @@
-import { test } from 'vitest'
-import { expect } from 'vitest'
+import { test, expect, vi } from 'vitest'
 import { run } from '../src/run.js'
 import { v1 } from '@datadog/datadog-api-client'
 
-const submitMetrics = jest.spyOn(v1.MetricsApi.prototype, 'submitMetrics')
-const createEvent = jest.spyOn(v1.EventsApi.prototype, 'createEvent')
+const submitMetrics = vi.spyOn(v1.MetricsApi.prototype, 'submitMetrics')
+const createEvent = vi.spyOn(v1.EventsApi.prototype, 'createEvent')
 
 test('run successfully', async () => {
   submitMetrics.mockResolvedValue({ status: 'ok' })
