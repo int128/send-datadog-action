@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { parseMetricsCsvSimple, parseMetricsCsvUseHeaderTags } from '../src/csv.js'
 
 describe('parseMetricsCsvSimple', () => {
