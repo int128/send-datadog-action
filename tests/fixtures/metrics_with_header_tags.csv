@@ -1,0 +1,3 @@
+metric_name,metric_type,metric_value,service,env
+example.metric,count,5,backend,production
+example.metric,count,7,frontend,development

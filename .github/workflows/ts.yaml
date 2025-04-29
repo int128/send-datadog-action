@@ -52,6 +52,13 @@ jobs:
             github.repository:${{ github.repository }}
             github.actor:${{ github.actor }}
 
+      - name: int128/send-datadog-action (use-header-tags)
+        uses: ./
+        with:
+          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
+          metrics-csv-path: tests/fixtures/metrics_with_header_tags.csv
+          metrics-cvs-format: use-header-tags
+
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
