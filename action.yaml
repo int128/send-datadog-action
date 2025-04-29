@@ -11,6 +11,10 @@ inputs:
   metrics-csv-path:
     description: Glob pattern to CSV file(s) for metrics
     required: false
+  metrics-csv-format:
+    description: Format of CSV file(s)
+    required: false
+    default: simple
   metric-name:
     description: Name of metric
     required: false
