@@ -2,11 +2,9 @@
 
 This is a general-purpose action to send a custom metric or event to Datadog.
 
-## Getting Started
+## Send a metric
 
-### Send a metric
-
-To send a metric,
+To send a metric to Datadog,
 
 ```yaml
 name: send-your-awesome-metrics
@@ -23,9 +21,9 @@ jobs:
           metric-value: 1
 ```
 
-### Send an event
+## Send an event
 
-To send an event,
+To send an event to Datadog,
 
 ```yaml
 name: send-your-awesome-events
@@ -41,9 +39,9 @@ jobs:
           event-text: This is an example event
 ```
 
-### Send metrics from CSV
+## Send metrics from CSV
 
-To send metric from CSV file(s),
+To send metrics from CSV file(s) to Datadog,
 
 ```yaml
 name: send-your-awesome-metrics
@@ -65,7 +63,7 @@ This action supports the following formats of CSV files:
 - `simple` (default)
 - `use-header-tags`
 
-#### Simple format
+### Simple format
 
 This format is useful when you generate a CSV file from a script.
 
@@ -84,7 +82,7 @@ Each line should have the following columns:
 
 See the example of [metrics.csv](tests/fixtures/metrics.csv).
 
-#### Use-header-tags format
+### Use-header-tags format
 
 This format is useful when you export a CSV file from a database or spreadsheet application.
 
