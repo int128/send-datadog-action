@@ -54,11 +54,13 @@ jobs:
       - name: int128/send-datadog-action (simple csv)
         uses: ./
         with:
+          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
           metrics-csv-path: tests/fixtures/metrics.csv
 
       - name: int128/send-datadog-action (use-header-tags csv)
         uses: ./
         with:
+          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
           metrics-csv-path: tests/fixtures/metrics_with_header_tags.csv
           metrics-csv-format: use-header-tags
 
