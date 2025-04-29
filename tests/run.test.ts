@@ -1,3 +1,5 @@
+import { test } from 'vitest'
+import { expect } from 'vitest'
 import { run } from '../src/run.js'
 import { v1 } from '@datadog/datadog-api-client'
 
