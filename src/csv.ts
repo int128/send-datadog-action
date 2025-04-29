@@ -32,10 +32,10 @@ const parseMetricsCsv = async (
   if (inputs.metricsCsvFormat === 'simple') {
     return parseMetricsCsvSimple(csvPath, unixTime)
   }
-  if (inputs.metricsCsvFormat === 'useHeaderTags') {
+  if (inputs.metricsCsvFormat === 'use-header-tags') {
     return parseMetricsCsvUseHeaderTags(csvPath, unixTime)
   }
-  throw new Error(`Unknown metrics csv format: ${inputs.metricsCsvFormat}`)
+  throw new Error(`Unknown metrics-csv-format: ${inputs.metricsCsvFormat}`)
 }
 
 export const parseMetricsCsvSimple = async (csvPath: string, unixTime: number): Promise<v1.Series[]> => {
