@@ -40,8 +40,8 @@ const parseMetricsCsv = async (
 
 export const parseMetricsCsvSimple = async (csvPath: string, unixTime: number): Promise<v1.Series[]> => {
   const series: v1.Series[] = []
-  const f = await fs.open(csvPath, 'r')
-  for await (const line of f.readLines()) {
+  const csvFileStream = await fs.open(csvPath, 'r')
+  for await (const line of csvFileStream.readLines()) {
     const columns = line.split(',')
 
     const metricName = columns.shift()
@@ -65,9 +65,9 @@ export const parseMetricsCsvSimple = async (csvPath: string, unixTime: number): 
 
 export const parseMetricsCsvUseHeaderTags = async (csvPath: string, unixTime: number): Promise<v1.Series[]> => {
   const series: v1.Series[] = []
-  const f = await fs.open(csvPath, 'r')
+  const csvFileStream = await fs.open(csvPath, 'r')
   let metricTagKeys: string[] | undefined
-  for await (const line of f.readLines()) {
+  for await (const line of csvFileStream.readLines()) {
     const columns = line.split(',')
 
     const metricName = columns.shift()
@@ -76,14 +76,15 @@ export const parseMetricsCsvUseHeaderTags = async (csvPath: string, unixTime: nu
     assert(metricType, `Metric type column is missing in line: ${line}`)
     const metricValue = columns.shift()
     assert(metricValue, `Metric value column is missing in line: ${line}`)
-    const metricTagValues = columns
 
     if (metricTagKeys === undefined) {
-      metricTagKeys = metricTagValues
+      metricTagKeys = columns
       continue
     }
-    assert(
-      metricTagKeys.length === metricTagValues.length,
+    const metricTagValues = columns
+    assert.strictEqual(
+      metricTagKeys.length,
+      metricTagValues.length,
       `Metric tag keys (${metricTagKeys.length}) and values (${metricTagValues.length}) length mismatch in line: ${line}`,
     )
     const metricTags = metricTagKeys.map((metricTagKey, index) => `${metricTagKey}:${metricTagValues[index]}`)
