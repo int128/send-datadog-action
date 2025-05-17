@@ -51,6 +51,16 @@ describe('parseMetricsCsvUseHeaderTags', () => {
 
 describe('splitArrayToChunks', () => {
   it('splits an array into chunks of a given size', () => {
+    const array = [1, 2, 3, 4, 5, 6]
+    const chunkSize = 3
+    const result = splitArrayToChunks(array, chunkSize)
+    expect(result).toEqual([
+      [1, 2, 3],
+      [4, 5, 6],
+    ])
+  })
+
+  it('splits an array into chunks of a given size with remainder', () => {
     const array = [1, 2, 3, 4, 5]
     const chunkSize = 2
     const result = splitArrayToChunks(array, chunkSize)
