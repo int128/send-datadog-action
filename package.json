@@ -10,7 +10,7 @@
   "dependencies": {
     "@actions/core": "1.11.1",
     "@actions/glob": "0.5.0",
-    "@datadog/datadog-api-client": "1.40.0"
+    "@datadog/datadog-api-client": "1.41.0"
   },
   "devDependencies": {
     "@eslint/js": "9.33.0",
