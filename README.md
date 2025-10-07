@@ -115,20 +115,21 @@ See the example of [metrics_with_header_tags.csv](tests/fixtures/metrics_with_he
 
 ### Inputs
 
-| Name                 | Default        | Description                                                             |
-| -------------------- | -------------- | ----------------------------------------------------------------------- |
-| `datadog-api-key`    | -              | Datadog API key. If not set, this action does not send metrics actually |
-| `datadog-site`       | -              | Datadog Site name if different than `datadoghq.com`                     |
-| `metrics-csv-path`   | -              | Glob pattern to CSV file(s) for metrics                                 |
-| `metrics-csv-format` | `simple`       | Format of CSV file(s)                                                   |
-| `metric-name`        | <sup>\*1</sup> | Name of metric                                                          |
-| `metric-type`        | <sup>\*1</sup> | Type of metric (`count`, `gauge` or `rate`)                             |
-| `metric-value`       | <sup>\*1</sup> | Value of metric                                                         |
-| `metric-tags`        | -              | Tags of metric (multi-line of `KEY:VALUE`)                              |
-| `event-title`        | <sup>\*2</sup> | Title of event                                                          |
-| `event-text`         | <sup>\*2</sup> | Text of event                                                           |
-| `event-alert-type`   | -              | Alert type of event (error, warning or info)                            |
-| `event-tags`         | -              | Tags of event (multi-line of KEY:VALUE)                                 |
+| Name                         | Default        | Description                                                             |
+| ---------------------------- | -------------- | ----------------------------------------------------------------------- |
+| `datadog-api-key`            | -              | Datadog API key. If not set, this action does not send metrics actually |
+| `datadog-site`               | -              | Datadog Site name if different than `datadoghq.com`                     |
+| `datadog-metrics-chunk-size` | 10000          | Number of metrics to send in a single request                           |
+| `metrics-csv-path`           | -              | Glob pattern to CSV file(s) for metrics                                 |
+| `metrics-csv-format`         | `simple`       | Format of CSV file(s)                                                   |
+| `metric-name`                | <sup>\*1</sup> | Name of metric                                                          |
+| `metric-type`                | <sup>\*1</sup> | Type of metric (`count`, `gauge` or `rate`)                             |
+| `metric-value`               | <sup>\*1</sup> | Value of metric                                                         |
+| `metric-tags`                | -              | Tags of metric (multi-line of `KEY:VALUE`)                              |
+| `event-title`                | <sup>\*2</sup> | Title of event                                                          |
+| `event-text`                 | <sup>\*2</sup> | Text of event                                                           |
+| `event-alert-type`           | -              | Alert type of event (error, warning or info)                            |
+| `event-tags`                 | -              | Tags of event (multi-line of KEY:VALUE)                                 |
 
 <sup>\*1</sup>: Required inputs if sending a metric.
 

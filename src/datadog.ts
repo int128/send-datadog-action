@@ -5,6 +5,7 @@ import { client, v1 } from '@datadog/datadog-api-client'
 export type DatadogInputs = {
   datadogApiKey: string
   datadogSite?: string
+  datadogMetricsChunkSize: number
 }
 
 const createConfiguration = (datadogInputs: DatadogInputs) => {
@@ -24,8 +25,7 @@ const createConfiguration = (datadogInputs: DatadogInputs) => {
 export const sendMetrics = async (datadogInputs: DatadogInputs, series: v1.Series[]) => {
   const api = new v1.MetricsApi(createConfiguration(datadogInputs))
   core.info(`Sending all ${series.length} metrics`)
-  const chunkSize = 10000
-  const chunks = splitArrayToChunks(series, chunkSize)
+  const chunks = splitArrayToChunks(series, datadogInputs.datadogMetricsChunkSize)
   for (const chunk of chunks) {
     core.info(`Sending ${chunk.length} metrics`)
     const metricsResponse = await api.submitMetrics({ body: { series: chunk } })

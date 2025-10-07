@@ -8,6 +8,10 @@ inputs:
   datadog-site:
     description: Datadog Site name if different than datadoghq.com
     required: false
+  datadog-metrics-chunk-size:
+    description: Number of metrics to send in a single request
+    required: false
+    default: '10000'
   metrics-csv-path:
     description: Glob pattern to CSV file(s) for metrics
     required: false
