@@ -11,6 +11,7 @@ test('run successfully', async () => {
   await expect(
     run({
       datadogApiKey: 'DATADOG_API_KEY',
+      datadogMetricsChunkSize: 10000,
       metricsCsvPath: 'tests/fixtures/metrics.csv',
       metricsCsvFormat: 'simple',
       metricName: 'my.metric',
