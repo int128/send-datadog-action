@@ -1,36 +1,21 @@
-import * as core from '@actions/core'
-import { client, v1 } from '@datadog/datadog-api-client'
-import { MetricsFromCsvInputs, sendMetricsFromCsv } from './csv.js'
+import { v1 } from '@datadog/datadog-api-client'
+import { MetricsFromCsvInputs, parseMetricsCsvFiles } from './csv.js'
+import { DatadogInputs, sendEvent, sendMetrics } from './datadog.js'
 
-type Inputs = {
-  datadogApiKey: string
-  datadogSite?: string
-} & MetricInputs &
-  EventInputs &
-  MetricsFromCsvInputs
+type Inputs = DatadogInputs & MetricInputs & EventInputs & MetricsFromCsvInputs
 
 export const run = async (inputs: Inputs): Promise<void> => {
-  const configuration = client.createConfiguration({
-    authMethods: {
-      apiKeyAuth: inputs.datadogApiKey,
-    },
-  })
-  if (inputs.datadogSite) {
-    client.setServerVariables(configuration, {
-      site: inputs.datadogSite,
-    })
-  }
   if (inputs.metricsCsvPath) {
-    const api = new v1.MetricsApi(configuration)
-    await sendMetricsFromCsv(api, inputs)
+    const metrics = await parseMetricsCsvFiles(inputs)
+    await sendMetrics(inputs, metrics)
   }
   if (inputs.metricName) {
-    const api = new v1.MetricsApi(configuration)
-    await sendMetric(api, inputs)
+    const metrics = parseMetricInputs(inputs)
+    await sendMetrics(inputs, metrics)
   }
   if (inputs.eventTitle) {
-    const api = new v1.EventsApi(configuration)
-    await sendEvent(api, inputs)
+    const event = parseEventInputs(inputs)
+    await sendEvent(inputs, event)
   }
 }
 
@@ -41,9 +26,9 @@ type MetricInputs = {
   metricTags: string[]
 }
 
-const sendMetric = async (api: v1.MetricsApi, inputs: MetricInputs) => {
+const parseMetricInputs = (inputs: MetricInputs): v1.Series[] => {
   const unixTime = Date.now() / 1000
-  const series: v1.Series[] = [
+  return [
     {
       host: 'github.com',
       metric: inputs.metricName,
@@ -52,9 +37,6 @@ const sendMetric = async (api: v1.MetricsApi, inputs: MetricInputs) => {
       tags: inputs.metricTags,
     },
   ]
-  core.info(`Sending metrics:\n${JSON.stringify(series, undefined, 2)}`)
-  const metricsResponse = await api.submitMetrics({ body: { series } })
-  core.info(`Sent metrics: ${String(metricsResponse.status)}`)
 }
 
 type EventInputs = {
@@ -74,9 +56,9 @@ export const parseEventAlertType = (s: string): v1.EventAlertType | undefined =>
   throw new Error(`event-alert-type must be either 'error', 'warning', 'success' or 'info'`)
 }
 
-const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
+const parseEventInputs = (inputs: EventInputs): v1.EventCreateRequest => {
   const unixTime = Date.now() / 1000
-  const event: v1.EventCreateRequest = {
+  return {
     host: 'github.com',
     title: inputs.eventTitle,
     text: inputs.eventText,
@@ -84,7 +66,4 @@ const sendEvent = async (api: v1.EventsApi, inputs: EventInputs) => {
     alertType: inputs.eventAlertType,
     tags: inputs.eventTags,
   }
-  core.info(`Sending event:\n${JSON.stringify(event, undefined, 2)}`)
-  const eventsResponse = await api.createEvent({ body: event })
-  core.info(`Sent event: ${String(eventsResponse.status)}`)
 }

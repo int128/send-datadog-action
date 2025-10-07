@@ -9,24 +9,15 @@ export type MetricsFromCsvInputs = {
   metricsCsvFormat: string
 }
 
-export const sendMetricsFromCsv = async (api: v1.MetricsApi, inputs: MetricsFromCsvInputs) => {
+export const parseMetricsCsvFiles = async (inputs: MetricsFromCsvInputs): Promise<v1.Series[]> => {
   const unixTime = Date.now() / 1000
   const series: v1.Series[] = []
-
   const csvGrobber = await glob.create(inputs.metricsCsvPath, { matchDirectories: false })
   for await (const csvPath of csvGrobber.globGenerator()) {
     core.info(`Reading metrics from ${csvPath}`)
     series.push(...(await parseMetricsCsv(inputs, csvPath, unixTime)))
   }
-
-  core.info(`All ${series.length} metrics`)
-  const chunkSize = 10000
-  const chunks = splitArrayToChunks(series, chunkSize)
-  for (const chunk of chunks) {
-    core.info(`Sending ${chunk.length} metrics`)
-    const metricsResponse = await api.submitMetrics({ body: { series: chunk } })
-    core.info(`Sent the metrics: ${String(metricsResponse.status)}`)
-  }
+  return series
 }
 
 const parseMetricsCsv = async (
@@ -103,13 +94,4 @@ export const parseMetricsCsvUseHeaderTags = async (csvPath: string, unixTime: nu
     })
   }
   return series
-}
-
-export const splitArrayToChunks = <E>(elements: E[], chunkSize: number): E[][] => {
-  assert(chunkSize > 0, 'chunkSize must be greater than 0')
-  const chunks: E[][] = []
-  for (let i = 0; i < elements.length; i += chunkSize) {
-    chunks.push(elements.slice(i, i + chunkSize))
-  }
-  return chunks
 }
