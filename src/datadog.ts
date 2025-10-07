@@ -7,7 +7,7 @@ export type DatadogInputs = {
   datadogSite?: string
 }
 
-export const sendMetrics = async (datadogInputs: DatadogInputs, series: v1.Series[]) => {
+const createConfiguration = (datadogInputs: DatadogInputs) => {
   const configuration = client.createConfiguration({
     authMethods: {
       apiKeyAuth: datadogInputs.datadogApiKey,
@@ -18,7 +18,11 @@ export const sendMetrics = async (datadogInputs: DatadogInputs, series: v1.Serie
       site: datadogInputs.datadogSite,
     })
   }
-  const api = new v1.MetricsApi(configuration)
+  return configuration
+}
+
+export const sendMetrics = async (datadogInputs: DatadogInputs, series: v1.Series[]) => {
+  const api = new v1.MetricsApi(createConfiguration(datadogInputs))
   core.info(`Sending all ${series.length} metrics`)
   const chunkSize = 10000
   const chunks = splitArrayToChunks(series, chunkSize)
@@ -39,17 +43,7 @@ export const splitArrayToChunks = <E>(elements: E[], chunkSize: number): E[][] =
 }
 
 export const sendEvent = async (datadogInputs: DatadogInputs, event: v1.EventCreateRequest) => {
-  const configuration = client.createConfiguration({
-    authMethods: {
-      apiKeyAuth: datadogInputs.datadogApiKey,
-    },
-  })
-  if (datadogInputs.datadogSite) {
-    client.setServerVariables(configuration, {
-      site: datadogInputs.datadogSite,
-    })
-  }
-  const api = new v1.EventsApi(configuration)
+  const api = new v1.EventsApi(createConfiguration(datadogInputs))
   core.info(`Sending event:\n${JSON.stringify(event, undefined, 2)}`)
   const eventsResponse = await api.createEvent({ body: event })
   core.info(`Sent event: ${String(eventsResponse.status)}`)
