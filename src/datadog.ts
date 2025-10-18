@@ -1,4 +1,4 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import * as core from '@actions/core'
 import { client, v1 } from '@datadog/datadog-api-client'
 

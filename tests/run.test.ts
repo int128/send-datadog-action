@@ -1,6 +1,6 @@
-import { test, expect, vi } from 'vitest'
-import { run } from '../src/run.js'
 import { v1 } from '@datadog/datadog-api-client'
+import { expect, test, vi } from 'vitest'
+import { run } from '../src/run.js'
 
 const submitMetrics = vi.spyOn(v1.MetricsApi.prototype, 'submitMetrics')
 const createEvent = vi.spyOn(v1.EventsApi.prototype, 'createEvent')

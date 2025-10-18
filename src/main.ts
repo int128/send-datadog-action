@@ -5,7 +5,7 @@ const main = async (): Promise<void> => {
   await run({
     datadogApiKey: core.getInput('datadog-api-key', { required: true }),
     datadogSite: core.getInput('datadog-site') || undefined,
-    datadogMetricsChunkSize: Number.parseInt(core.getInput('datadog-metrics-chunk-size', { required: true })),
+    datadogMetricsChunkSize: Number.parseInt(core.getInput('datadog-metrics-chunk-size', { required: true }), 10),
     metricsCsvPath: core.getInput('metrics-csv-path'),
     metricsCsvFormat: core.getInput('metrics-csv-format', { required: true }),
     metricName: core.getInput('metric-name'),
