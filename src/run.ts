@@ -1,6 +1,6 @@
-import { v1 } from '@datadog/datadog-api-client'
-import { MetricsFromCsvInputs, parseMetricsCsvFiles } from './csv.js'
-import { DatadogInputs, sendEvent, sendMetrics } from './datadog.js'
+import type { v1 } from '@datadog/datadog-api-client'
+import { type MetricsFromCsvInputs, parseMetricsCsvFiles } from './csv.js'
+import { type DatadogInputs, sendEvent, sendMetrics } from './datadog.js'
 
 type Inputs = DatadogInputs & MetricInputs & EventInputs & MetricsFromCsvInputs
 

@@ -1,8 +1,8 @@
-import assert from 'assert'
+import assert from 'node:assert'
+import * as fs from 'node:fs/promises'
 import * as core from '@actions/core'
-import * as fs from 'fs/promises'
 import * as glob from '@actions/glob'
-import { v1 } from '@datadog/datadog-api-client'
+import type { v1 } from '@datadog/datadog-api-client'
 
 export type MetricsFromCsvInputs = {
   metricsCsvPath: string
