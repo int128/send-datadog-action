@@ -15,7 +15,11 @@ export const parseMetricsCsvFiles = async (inputs: MetricsFromCsvInputs): Promis
   const csvGrobber = await glob.create(inputs.metricsCsvPath, { matchDirectories: false })
   for await (const csvPath of csvGrobber.globGenerator()) {
     core.info(`Reading metrics from ${csvPath}`)
-    series.push(...(await parseMetricsCsv(inputs, csvPath, unixTime)))
+    // Avoid using spread with a huge array which can cause "Maximum call stack size exceeded".
+    const fileSeries = await parseMetricsCsv(inputs, csvPath, unixTime)
+    for (const s of fileSeries) {
+      series.push(s)
+    }
   }
   return series
 }
