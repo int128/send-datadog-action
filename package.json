@@ -9,7 +9,7 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "@actions/glob": "0.7.0",
-    "@datadog/datadog-api-client": "1.56.0"
+    "@datadog/datadog-api-client": "1.57.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.13",
